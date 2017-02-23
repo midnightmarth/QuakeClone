@@ -1,0 +1,41 @@
+using UnityEngine;
+using System.Collections;
+
+public class WeaponHandler : MonoBehaviour {
+
+	public GameObject rocketLauncher;
+	public GameObject rocketPrefab;
+	public GameObject railGun;
+	public GameObject weaponLocation;
+
+	public bool playerHasWeapon;
+
+	private GameObject playerWeaponHeld; 
+
+	void Start(){
+		playerHasWeapon = false;
+		playerWeaponHeld = null;
+	}
+
+	void Update(){
+
+		if(Input.GetMouseButtonDown(0) && playerHasWeapon){
+			GameObject.Find("Rocket Launcher_Hold(Clone)").GetComponent<RocketLauncherWeapon>().fire();
+
+
+		}
+	}
+
+	public void weaponGet(GameObject weaponName){
+		playerHasWeapon = true;
+		playerWeaponHeld = weaponName;
+		if(weaponName.name == "Rocket Launcher_Pickup"){
+			GameObject i = Instantiate (rocketLauncher, weaponLocation.transform.position, Quaternion.identity) as GameObject;
+			i.transform.parent = GameObject.Find("WeaponLocation").transform;
+			
+		}else if(weaponName.name == "RailGun_Pickup"){
+			Debug.Log ("Missing gun");
+		}else{Debug.Log (weaponName);}
+
+	}
+}
